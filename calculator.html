@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harish Calculator</title>
+    <style>
+        body {
+
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding-right: 35px;
+        }
+
+        .display {
+            font-size: 24px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: right;
+            width: 100%;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .button {
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #00000070;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="button" onclick="setNum('7')">7</button>
+            <button class="button" onclick="setNum('8')">8</button>
+            <button class="button" onclick="setNum('9')">9</button>
+            <button class="button" onclick="setOpp('+')">+</button>
+            <button class="button" onclick="setNum('4')">4</button>
+            <button class="button" onclick="setNum('5')">5</button>
+            <button class="button" onclick="setNum('6')">6</button>
+            <button class="button" onclick="setOpp('-')">-</button>
+            <button class="button" onclick="setNum('1')">1</button>
+            <button class="button" onclick="setNum('2')">2</button>
+            <button class="button" onclick="setNum('3')">3</button>
+            <button class="button" onclick="setOpp('*')">*</button>
+            <button class="button" onclick="setNum('0')">0</button>
+            <button class="button" onclick="clearDisplay()">C</button>
+            <button class="button" onclick="calculate()">=</button>
+            <button class="button" onclick="setOpp('/')">/</button>
+        </div>
+    </div>
+
+    <script>
+        let displayValue = '0';
+        let operator = '';
+        let operand1 = '';
+        let operand2 = '';
+
+        function updateDisplay() {
+            const display = document.getElementById('display');
+            if (operator === '') {
+                display.innerText = displayValue;
+            } else {
+                display.innerText = operand1 + operator + displayValue;
+            }
+        }
+
+        function setNum(num) {
+            if (displayValue === '0' && operator === '') {
+                displayValue = num;
+            } else {
+                displayValue += num;
+            }
+            updateDisplay();
+        }
+
+        function setOpp(op) {
+            operator = op;
+            operand1 = displayValue;
+            displayValue = '';
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            displayValue = '0';
+            operand1 = '';
+            operand2 = '';
+            operator = '';
+            updateDisplay();
+        }
+
+        function calculate() {
+            operand2 = displayValue;
+            let result = 0;
+            switch (operator) {
+                case '+':
+                    result = parseFloat(operand1) + parseFloat(operand2);
+                    break;
+                case '-':
+                    result = parseFloat(operand1) - parseFloat(operand2);
+                    break;
+                case '*':
+                    result = parseFloat(operand1) * parseFloat(operand2);
+                    break;
+                case '/':
+                    result = parseFloat(operand1) / parseFloat(operand2);
+                    break;
+            }
+            displayValue = result.toString();
+            operator = '';
+            updateDisplay();
+        }
+    </script>
+</body>
+
+</html>
